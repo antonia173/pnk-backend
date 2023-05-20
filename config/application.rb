@@ -18,5 +18,7 @@ module Pnk
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.secret_key_base = Rails.application.credentials.dig(:production, :secret_key_base)
+
   end
 end
