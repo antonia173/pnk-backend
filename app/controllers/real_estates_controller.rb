@@ -1,5 +1,6 @@
 class RealEstatesController < ApplicationController
   before_action :set_real_estate, only: [:show, :edit, :update, :destroy, :content] 
+  skip_before_action :verify_authenticity_token
 
   def index
     real_estates = RealEstate.includes(:real_estate_type)

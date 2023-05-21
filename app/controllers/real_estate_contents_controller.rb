@@ -1,5 +1,6 @@
 class RealEstateContentsController < ApplicationController
   before_action :set_real_estate_content, only: [:show, :edit, :update, :destroy] 
+  skip_before_action :verify_authenticity_token
 
   def new
     content = RealEstateContent.new
