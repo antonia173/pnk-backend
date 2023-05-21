@@ -22,13 +22,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_20_204405) do
     t.index ["real_estate_id"], name: "index_real_estate_contents_on_real_estate_id"
   end
 
-  create_table "real_estate_details", force: :cascade do |t|
-    t.bigint "real_estate_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["real_estate_id"], name: "index_real_estate_details_on_real_estate_id"
-  end
-
   create_table "real_estate_types", force: :cascade do |t|
     t.string "typeName"
     t.string "description"
@@ -44,11 +37,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_20_204405) do
     t.bigint "real_estate_type_id"
     t.integer "yearBuilt"
     t.integer "squareSize"
-    t.date "dateAdded", default: "2023-05-20"
+    t.date "dateAdded", default: "2023-05-21"
     t.index ["real_estate_type_id"], name: "index_real_estates_on_real_estate_type_id"
   end
 
   add_foreign_key "real_estate_contents", "real_estates", on_delete: :cascade
-  add_foreign_key "real_estate_details", "real_estates", on_delete: :cascade
   add_foreign_key "real_estates", "real_estate_types"
 end

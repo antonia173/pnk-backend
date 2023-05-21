@@ -11,10 +11,6 @@ class RealEstatesController < ApplicationController
     render json: response, status: 200
   end
 
-  def new
-    real_estate = RealEstate.new
-  end
-
   def create
     real_estate = RealEstate.new(real_estate_params)
     real_estate.real_estate_type_id = type_params[:realEstateTypeId]
@@ -31,10 +27,7 @@ class RealEstatesController < ApplicationController
       render json: { error: "Creating error..."}
     end
   end
-
-  def edit
-  end
-
+  
   def update
     type_id = type_params[:realEstateTypeId]
 
