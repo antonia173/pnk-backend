@@ -16,16 +16,15 @@ class RealEstatesController < ApplicationController
   end
 
   def create
-    real_estate_params = details_params.slice(:price, :realEstateName, :realEstateCountry, :realEstateCity, :yearBuilt, :squareSize)
-    type_id = details_params[:realEstateType][:realEstateTypeId]
-    contents = details_params[:content]
-
-    puts real_estate_params
     real_estate = RealEstate.new(real_estate_params)
+    real_estate.real_estate_type_id = type_params[:realEstateTypeId]
     if real_estate.save
-      real_estate.update(real_estate_type_id: type_id) if RealEstateType.exists?(type_id)
-      contents.each do |content|
-        RealEstateContent.create(content.slice(:contentName, :quantity, :description))
+      content_params.each do |content|
+        c = RealEstateContent.new(content)
+        c.real_estate_id = real_estate.id 
+        if !c.save
+          render json: { error: "Creating real estate content error..."}
+        end
       end
       render json:real_estate, status: 200
     else
@@ -37,17 +36,15 @@ class RealEstatesController < ApplicationController
   end
 
   def update
-    real_estate_params = details_params.slice(:price, :realEstateName, :realEstateCountry, :realEstateCity, :yearBuilt, :squareSize)
-    type_id = details_params[:realEstateType][:realEstateTypeId]
-    contents = details_params[:content]
+    type_id = type_params[:realEstateTypeId]
 
     if @real_estate.update(real_estate_params)
       @real_estate.update(real_estate_type_id: type_id) if RealEstateType.exists?(type_id)
-
-      contents.each do |content|
-        RealEstateContent.find(content[:contentId]).update(content.slice(:contentName, :quantity, :description))
+      if !content_params.nil?
+        content_params.each do |content|
+          RealEstateContent.find_by(real_estate_id: @real_estate.id, contentName: content[:contentName]).update(content)
+        end
       end
-
       render json: "Real estate updated successfuly!"
     else 
       render json: { error: "Creating error..."}
@@ -96,17 +93,26 @@ class RealEstatesController < ApplicationController
   
 
   private
-  def details_params
-    params.permit(
+  def real_estate_params
+    parameters = params.require(:real_estate).permit(
       :price,
       :realEstateName,
       :realEstateCountry,
       :realEstateCity,
       :yearBuilt,
-      :squareSize,
-      realEstateType: [:realEstateTypeId],
-      content: [:contentId, :contentName, :quantity, :description]
+      :squareSize
     )
+
+  end
+
+  def type_params
+      params.require(:realEstateType).permit(:realEstateTypeId, :typeName, :description)
+  end
+
+  def content_params
+    params.require(:content).map do |content_params|
+      content_params.permit(:contentName, :quantity, :description)
+    end
   end
 
   def set_real_estate

@@ -8,7 +8,7 @@
 
 apartment = RealEstateType.create(typeName: "Apartman", description: "Stan koji se koristi za odmor.")
 house = RealEstateType.create(typeName: "Kuća", description: "Nekretnina koja služi za stanovanje.")
-work_space = RealEstateType.create(typeName: "Poslovni prostor". description: "Nekretnina koje služi za obavljanje djelatnosti")
+work_space = RealEstateType.create(typeName: "Poslovni prostor", description: "Nekretnina koje služi za obavljanje djelatnosti")
 
 apartment_ana = RealEstate.create(price: 140000.0, realEstateName: "Apartman Ana", realEstateCountry: "Hrvatska", realEstateCity: "Split", real_estate_type: apartment, yearBuilt: 2015, squareSize: 98)
 villa_marina = RealEstate.create(price: 890000.0, realEstateName: "Villa Marina", realEstateCountry: "Hrvatska", realEstateCity: "Dubrovnik", real_estate_type: house, yearBuilt: 2018, squareSize: 363)
