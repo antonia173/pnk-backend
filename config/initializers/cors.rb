@@ -29,5 +29,18 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     resource '/real-estates/types',
       headers: :any,
       methods: [:get, :options]
+
+    resource '/real-estates/types/add',
+      headers: :any,
+      methods: [:post, :options]
+
+    resource '/real-estates/types/update/*',
+      headers: :any,
+      methods: [:put, :options]
+
+    resource '/real-estates/types/delete/*',
+      headers: :any,
+      methods: [:delete, :options]
+      
   end
 end
