@@ -19,6 +19,7 @@ module Pnk
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.secret_key_base = Rails.application.credentials.dig(:production, :secret_key_base)
+    config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
 
   end
 end
