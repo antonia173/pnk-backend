@@ -1,33 +1,33 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins 'http://localhost:4200' 
-    
+
     resource '/real-estates',
       headers: :any,
-      methods: [:get]
+      methods: [:get, :options]
   
     resource '/real-estates/*',
       headers: :any,
-      methods: [:get]
+      methods: [:get, :options]
 
     resource '/real-estates/add',
       headers: :any,
-      methods: [:post]
+      methods: [:post, :options]
 
     resource '/real-estates/update/*',
       headers: :any,
-      methods: [:put]
+      methods: [:put, :options]
 
     resource '/real-estates/delete/*',
       headers: :any,
-      methods: [:delete]
+      methods: [:delete, :options]
 
     resource '/real-estates/content/*',
       headers: :any,
-      methods: [:get]
+      methods: [:get, :options]
 
     resource '/real-estates/types',
       headers: :any,
-      methods: [:get]
+      methods: [:get, :options]
   end
 end

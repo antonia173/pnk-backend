@@ -15,8 +15,16 @@ class RealEstatesController < ApplicationController
   end
 
   def create
+    real_estate_params = details_params.slice(:price, :realEstateName, :realEstateCountry, :realEstateCity, :yearBuilt, :squareSize)
+    type_id = details_params[:realEstateType][:realEstateTypeId]
+    contents = details_params[:content]
+
     real_estate = RealEstate.new(real_estate_params)
     if real_estate.save
+      real_estate.update(real_estate_type_id: type_id) if RealEstateType.exists?(type_id)
+      contents.each do |content|
+        RealEstateContent.create(content.slice(:contentName, :quantity, :description))
+      end
       render json:real_estate, status: 200
     else
       render json: { error: "Creating error..."}
@@ -76,7 +84,7 @@ class RealEstatesController < ApplicationController
 
   def destroy
     @real_estate.destroy
-    redirect_to root_path
+    render json: "Real estate deleted!"
   end
 
   def content
