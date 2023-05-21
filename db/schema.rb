@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_20_204405) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_21_170742) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,10 +34,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_20_204405) do
     t.string "realEstateName"
     t.string "realEstateCountry"
     t.string "realEstateCity"
-    t.bigint "real_estate_type_id"
     t.integer "yearBuilt"
     t.integer "squareSize"
     t.date "dateAdded", default: "2023-05-21"
+    t.bigint "real_estate_type_id"
     t.index ["real_estate_type_id"], name: "index_real_estates_on_real_estate_type_id"
   end
 

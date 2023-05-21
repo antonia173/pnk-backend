@@ -1,6 +1,6 @@
 class RealEstate < ApplicationRecord
   has_many :real_estate_contents, dependent: :destroy
-  belongs_to :real_estate_type
+  belongs_to :real_estate_type, optional: true
   validates :price, presence: true
   validates :realEstateName, presence: true
   validates :realEstateCity, presence: true
