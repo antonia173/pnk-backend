@@ -27,7 +27,7 @@ class RealEstatesController < ApplicationController
       render json: { error: "Creating error..."}
     end
   end
-  
+
   def update
     type_id = type_params[:realEstateTypeId]
 
@@ -55,7 +55,7 @@ class RealEstatesController < ApplicationController
         realEstateCountry: @real_estate.realEstateCountry,
         realEstateCity: @real_estate.realEstateCity,
         realEstateType: {
-          realEstateTypeId: type.id,
+          id: type.id,
           typeName: type.typeName,
           description: type.description
         },
