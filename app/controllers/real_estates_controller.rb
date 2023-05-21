@@ -5,7 +5,7 @@ class RealEstatesController < ApplicationController
     real_estates = RealEstate.includes(:real_estate_type)
     response = real_estates.as_json(
       only: [:id, :realEstateName, :price, :realEstateCountry, :realEstateCity, :dateAdded, :squareSize, :yearBuilt],
-      methods: :typeName
+      methods: :realEstateType
     )
     render json: response, status: 200
   end

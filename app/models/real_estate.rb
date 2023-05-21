@@ -7,7 +7,7 @@ class RealEstate < ApplicationRecord
   validates :realEstateCity, presence: true
   validates :realEstateCountry, presence: true
 
-  def typeName
+  def realEstateType
     real_estate_type.typeName if real_estate_type.present?
   end
 end

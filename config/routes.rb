@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root "real_estates#index"
 
   get 'real-estates', to: 'real_estates#index'
-  get 'real-estates/details/:id', to: 'real_estates#show'
+  get 'real-estates/:id', to: 'real_estates#show'
   post 'real-estates/add', to: 'real_estates#create'
   put 'real-estates/update/:id', to: 'real_estates#update'
   delete 'real-estates/delete/:id', to: 'real_estates#destroy'
