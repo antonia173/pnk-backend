@@ -12,7 +12,7 @@ rbenv install 3.1.2
 rbenv global 3.1.2
 ```
 
-*  clone project repo
+*  clone project repo git@github.com:antonia173/pnk.git
 ```
 git clone 
 ```
