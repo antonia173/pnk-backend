@@ -13,19 +13,23 @@ class RealEstatesController < ApplicationController
 
   def create
     real_estate = RealEstate.new(real_estate_params)
-    if RealEstateType.exists?(type_params[:id])
-      real_estate.real_estate_type_id = type_params[:id]
-    else
-      t = RealEstateType.create(type_params.slice(:typeName, :description))
-      real_estate.real_estate_type_id = t.id  
+    if type_params.present?
+      if RealEstateType.exists?(type_params[:id])
+        real_estate.real_estate_type_id = type_params[:id]
+      else
+        t = RealEstateType.create(type_params.slice(:typeName, :description))
+        real_estate.real_estate_type_id = t.id  
+      end
     end
 
     if real_estate.save
-      content_params.each do |content|
-        c = RealEstateContent.new(content)
-        c.real_estate_id = real_estate.id 
-        if !c.save
-          render json: { error: "Creating real estate content error..."}
+      if !content_params.empty?
+        content_params.each do |content|
+          c = RealEstateContent.new(content)
+          c.real_estate_id = real_estate.id 
+          if !c.save
+            render json: { error: "Creating real estate content error..."}
+          end
         end
       end
       render json:real_estate, status: 200
@@ -35,30 +39,25 @@ class RealEstatesController < ApplicationController
   end
 
   def update
-    type_id = type_params[:id]
+    type_id = type_params.empty? ? nil : type_params[:id]
     if @real_estate.update(real_estate_params)
       @real_estate.update(real_estate_type_id: type_id) if RealEstateType.exists?(type_id)
 
-      if !content_params.nil?
-        contents = @real_estate.real_estate_contents
-        missing_contents = contents.reject { |c| content_params.any? { |cp| cp[:contentName] == c.contentName } }
-        missing_contents.each do |content|
-          content.destroy  
-        end
-
+      contents = @real_estate.real_estate_contents
+      missing_contents = contents.reject { |c| content_params.any? { |cp| cp[:contentName] == c.contentName } }
+      missing_contents.each(&:destroy)  if missing_contents.present?
+  
+      if !content_params.empty?
         content_params.each do |content|
           if con = RealEstateContent.find_by(real_estate_id: @real_estate.id, contentName: content[:contentName])
             con.update(content)
           else
             c = RealEstateContent.new(content)
             c.real_estate_id = @real_estate.id 
-            if !c.save
-              render json: { error: "Creating real estate content error..."}
-            end
+            render json: { error: "Creating real estate content error..."} unless c.save
           end
         end
       end
-
       render json: "Real estate updated successfuly!"
     else 
       render json: { error: "Update error..."}
@@ -119,14 +118,23 @@ class RealEstatesController < ApplicationController
   end
 
   def type_params
+    if params[:realEstateType].present?
       params.require(:realEstateType).permit(:id, :typeName, :description)
+    else
+      []
+    end
   end
 
   def content_params
-    params.require(:content).map do |content_params|
-      content_params.permit(:contentName, :quantity, :description)
+    if params[:content].present?
+      params.require(:content).map do |content_params|
+        content_params.permit(:contentName, :quantity, :description)
+      end
+    else
+      []
     end
   end
+  
 
   def set_real_estate
     @real_estate = RealEstate.find(params[:id])
