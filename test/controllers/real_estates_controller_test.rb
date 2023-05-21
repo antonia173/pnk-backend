@@ -1,7 +1,7 @@
 require "test_helper"
 
 class RealEstatesControllerTest < ActionDispatch::IntegrationTest
-  skip_forgery_protection
+  skip_before_action :verify_authenticity_token
   
   setup do
     @real_estate = real_estates(:one)
