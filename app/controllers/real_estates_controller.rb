@@ -20,6 +20,7 @@ class RealEstatesController < ApplicationController
     type_id = details_params[:realEstateType][:realEstateTypeId]
     contents = details_params[:content]
 
+    puts real_estate_params
     real_estate = RealEstate.new(real_estate_params)
     if real_estate.save
       real_estate.update(real_estate_type_id: type_id) if RealEstateType.exists?(type_id)
