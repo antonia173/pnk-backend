@@ -135,7 +135,6 @@ class RealEstatesController < ApplicationController
     end
   end
   
-
   def set_real_estate
     @real_estate = RealEstate.find(params[:id])
   end
