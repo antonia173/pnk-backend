@@ -16,5 +16,8 @@ Rails.application.routes.draw do
   put 'real-estates/update/:id', to: 'real_estates#update'
   delete 'real-estates/delete/:id', to: 'real_estates#destroy'
   get 'real-estates/content/:id', to: 'real_estates#content'
+
+  get '/*anything', to: 'application#option', constraints: { method: :options }
+
 end
 
