@@ -42,5 +42,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_170742) do
   end
 
   add_foreign_key "real_estate_contents", "real_estates", on_delete: :cascade
-  add_foreign_key "real_estates", "real_estate_types"
+  add_foreign_key "real_estates", "real_estate_types", on_delete: :nullify
 end
