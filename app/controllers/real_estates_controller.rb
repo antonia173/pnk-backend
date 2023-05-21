@@ -94,7 +94,7 @@ class RealEstatesController < ApplicationController
 
   private
   def real_estate_params
-    parameters = params.require(:real_estate).permit(
+    params.require(:real_estate).permit(
       :price,
       :realEstateName,
       :realEstateCountry,
@@ -102,7 +102,6 @@ class RealEstatesController < ApplicationController
       :yearBuilt,
       :squareSize
     )
-
   end
 
   def type_params
