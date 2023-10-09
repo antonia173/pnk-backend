@@ -10,20 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_21_170742) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.0].define(version: 2023_10_06_100900) do
   create_table "real_estate_contents", force: :cascade do |t|
-    t.string "contentName"
+    t.string "name"
     t.string "description"
     t.integer "quantity"
-    t.bigint "real_estate_id", null: false
+    t.integer "real_estate_id", null: false
     t.index ["real_estate_id"], name: "index_real_estate_contents_on_real_estate_id"
   end
 
   create_table "real_estate_types", force: :cascade do |t|
-    t.string "typeName"
+    t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -31,13 +28,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_21_170742) do
 
   create_table "real_estates", force: :cascade do |t|
     t.decimal "price", precision: 10, scale: 2
-    t.string "realEstateName"
-    t.string "realEstateCountry"
-    t.string "realEstateCity"
-    t.integer "yearBuilt"
-    t.integer "squareSize"
-    t.date "dateAdded", default: "2023-05-21"
-    t.bigint "real_estate_type_id"
+    t.string "name"
+    t.string "country"
+    t.string "city"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "year_built"
+    t.integer "square_size"
+    t.integer "real_estate_type_id"
     t.index ["real_estate_type_id"], name: "index_real_estates_on_real_estate_type_id"
   end
 

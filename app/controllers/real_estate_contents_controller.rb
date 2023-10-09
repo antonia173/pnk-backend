@@ -1,2 +1,0 @@
-class RealEstateContentsController < ApplicationController
-end

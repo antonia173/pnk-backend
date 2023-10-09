@@ -2,11 +2,39 @@ class RealEstate < ApplicationRecord
   has_many :real_estate_contents, dependent: :destroy
   belongs_to :real_estate_type, optional: true
   validates :price, presence: true
-  validates :realEstateName, presence: true
-  validates :realEstateCity, presence: true
-  validates :realEstateCountry, presence: true
+  validates :name, presence: true
+  validates :city, presence: true
+  validates :country, presence: true
 
-  def realEstateType
-    real_estate_type.typeName if real_estate_type.present?
+  alias_attribute :realEstateName, :name
+  alias_attribute :realEstateCountry, :country
+  alias_attribute :realEstateCity, :city
+  alias_attribute :yearBuilt, :year_built
+  alias_attribute :squareSize, :square_size
+
+  def type_name
+    real_estate_type.name if real_estate_type.present?
   end
+
+  def as_json(options = {})
+    json = {
+      id: id,
+      realEstateName: name,
+      price: price, 
+      realEstateCountry: country,
+      realEstateCity: city,
+      dateAdded: created_at.strftime("%Y-%m-%d"),
+      yearBuilt: year_built,
+      squareSize: square_size,
+      realEstateType: type_name
+    }
+
+    if options[:show] 
+      json[:realEstateContents] = real_estate_contents.as_json
+      json[:realEstateType] = real_estate_type.as_json 
+    end
+
+    json
+  end
+  
 end
