@@ -4,11 +4,7 @@ class RealEstateUpdater
     @real_estate_params = real_estate_params.except(:realEstateType, :content)
     @type_params = real_estate_params[:realEstateType]
     @content_params = real_estate_params[:content]
-
-    puts "@real_estate_params: #{@real_estate_params}"
-    puts "@type_params: #{@type_params}"
-    puts "@content_params: #{@content_params}"
-
+    
     perform
   end
 

@@ -16,6 +16,10 @@ class RealEstate < ApplicationRecord
     real_estate_type.name if real_estate_type.present?
   end
 
+  def date_added
+    created_at.strftime("%Y-%m-%d")
+  end
+
   def as_json(options = {})
     json = {
       id: id,
@@ -23,14 +27,14 @@ class RealEstate < ApplicationRecord
       price: price, 
       realEstateCountry: country,
       realEstateCity: city,
-      dateAdded: created_at.strftime("%Y-%m-%d"),
+      dateAdded: date_added,
       yearBuilt: year_built,
       squareSize: square_size,
       realEstateType: type_name
     }
 
     if options[:show] 
-      json[:realEstateContents] = real_estate_contents.as_json
+      json[:content] = real_estate_contents.as_json
       json[:realEstateType] = real_estate_type.as_json 
     end
 

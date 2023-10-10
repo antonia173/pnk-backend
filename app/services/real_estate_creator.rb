@@ -1,4 +1,6 @@
 class RealEstateCreator
+  attr_reader :real_estate
+
   def initialize(real_estate_params)
     @real_estate_params = real_estate_params.except(:realEstateType, :content)
     @type_params = real_estate_params[:realEstateType]
@@ -34,6 +36,8 @@ class RealEstateCreator
   end
 
   def contents_create
+    return unless @contents.present?
+
     @contents.each do |c|
       content = @real_estate.real_estate_contents.build(c)
       content.save!

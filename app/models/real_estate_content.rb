@@ -6,7 +6,7 @@ class RealEstateContent < ApplicationRecord
 
   def as_json(options = {})
     {
-      id: id,
+      contentId: id,
       contentName: name,
       quantity: quantity,
       description: description

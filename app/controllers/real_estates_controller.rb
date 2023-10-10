@@ -10,8 +10,8 @@ class RealEstatesController < ApplicationController
 
   def create
     begin
-      real_estate = RealEstateCreator.new(real_estate_params)
-      render json: real_estate, status: 200
+      creator = RealEstateCreator.new(real_estate_params)
+      render json: creator.real_estate, status: 200
     rescue => e
       render json: { error: e.message }, status: 400
     end
@@ -31,13 +31,17 @@ class RealEstatesController < ApplicationController
       response = @real_estate.as_json(show: true)
       render json: response, status: 200
     else
-      render json: { error: "Real estate not found!"}, status: 400
+      render json: { error: "Real estate not found!"}, status: 404
     end
   end
 
   def destroy
-    @real_estate.destroy
-    render json: "Real estate deleted!"
+    if @real_estate
+      @real_estate.destroy
+      render json: "Real estate deleted!", status: 200
+    else
+      render json: "Real estate not found!", status: 404
+    end
   end
 
   def content
@@ -45,7 +49,7 @@ class RealEstatesController < ApplicationController
       contents = @real_estate.real_estate_contents.as_json
       render json: contents, status: 200
     else
-      render json: "Real estate has no contents", status: 400
+      render json: "Real estate has no contents", status: 404
     end
   end
   
