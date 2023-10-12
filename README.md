@@ -5,18 +5,6 @@ Key Features:
 * Master-Detail Form
 * Three-Tier Architecture
 
-Master (RealEstate):
-* name
-* city
-* country
-* year built
-* square size
-
-Detail (RealEstateContent):
-* name (e.g., Bathrooms, Bedrooms)
-* quantity (e.g., 2 bathrooms, 3 bedrooms)
-* description (if needed)
-
 ## Setup
 
 * install ruby '3.1.2'
