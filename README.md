@@ -5,6 +5,18 @@ Key Features:
 * Master-Detail Form
 * Three-Tier Architecture
 
+Master (RealEstate):
+* name
+* city
+* country
+* year built
+* square size
+
+Detail (RealEstateContent):
+* name (e.g., Bathrooms, Bedrooms)
+* quantity (e.g., 2 bathrooms, 3 bedrooms)
+* description (if needed)
+
 ## Setup
 
 * install ruby '3.1.2'
@@ -26,10 +38,9 @@ gem install bundler
 ```
 gem install rails -v 7.0.4
 ```
-
 *  clone project repo 
 ```
-git clone git@github.com:antonia173/pnk.git
+git clone git@github.com:antonia173/pnk-backend.git
 ```
 *  install gems
 ```
@@ -43,9 +54,9 @@ bundle exec rake db:create
 ```
 bundle exec rake db:migrate
 ```
-* run server on http://localhost:3000/
+* run server on http://localhost:3000
 ```
-bundle exec rails s
+rails s
 ```
 
 ## Running tests
